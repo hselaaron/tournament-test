@@ -1,25 +1,13 @@
-import { Controller } from '@nestjs/common';
-import { Crud, CrudController } from '@nestjsx/crud';
+import { Controller, Get, Query } from '@nestjs/common';
 import { TournamentService } from './tournament.service';
 import { Tournament } from './entities/tournament.entity';
 
-@Crud({
-    model: {
-      type: Tournament,
-    },
-    query: {
-        join: {
-            platforms: {
-                eager: true,
-            },
-            game: {
-                eager: true,
-                exclude: ['createdAt', 'modifiedAt'],
-            },
-        },
-    },
-})
 @Controller('tournament')
-export class TournamentController implements CrudController<Tournament> {
-    constructor(public service: TournamentService) {}
+export class TournamentController {
+  constructor(public service: TournamentService) {}
+
+  @Get('/')
+  async findAll(@Query() query) {
+    return this.service.findAll(query);
+  }
 }

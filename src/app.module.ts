@@ -7,10 +7,7 @@ import { databaseConf } from './config/database.config';
 import { Connection } from 'typeorm';
 
 @Module({
-  imports: [
-    TournamentModule,
-    TypeOrmModule.forRoot(databaseConf),
-  ],
+  imports: [TournamentModule, TypeOrmModule.forRoot(databaseConf)],
   controllers: [AppController],
   providers: [AppService],
 })
