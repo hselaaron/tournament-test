@@ -12,7 +12,7 @@ import {
 import { Game } from './game.entity';
 import { Platform } from './platform.entity';
 
-enum Status {
+export enum Status {
   PLANNING = 'started',
   RUNNING = 'running',
   COMPLETED = 'completed',

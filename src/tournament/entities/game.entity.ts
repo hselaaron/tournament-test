@@ -4,7 +4,6 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
   OneToMany,
 } from 'typeorm';
 import { Tournament } from './tournament.entity';
