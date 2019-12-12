@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like } from 'typeorm';
 import { Tournament } from './entities/tournament.entity';
 import { Game } from './entities/game.entity';
-import { CreateTournamentDTO } from './tournament.dto';
+import { CreateTournamentDTO, UpdateTournamentDTO } from './dto';
 import { Platform } from './entities/platform.entity';
 
 @Injectable()
@@ -15,9 +15,15 @@ export class TournamentService {
   ) {}
 
   async findAll(query: any) {
-    const take: number = parseInt(query.take, 0) || 20;
-    const skip: number = parseInt(query.skip, 0) || 0;
-    const join: string[] = query.join || [];
+    // Defining page length and joins
+    const take: number = parseInt(query.length, 0) || 10;
+    const join: string[] = /*query.join || */ [];
+
+    // Creating page skips
+    let skip: number = 0;
+    if (typeof query.page !== 'undefined') {
+      skip = (query.page * take) - take;
+    }
 
     // Join by defualt
     join.push('platforms', 'game');
@@ -35,7 +41,9 @@ export class TournamentService {
 
     return {
       data: result,
+      itemCount: result.length,
       total,
+      page: parseInt(query.page, 0),
     };
   }
 
@@ -63,5 +71,35 @@ export class TournamentService {
     newTournament.rules = tournament.rules;
 
     return this.tournamentRepo.save(newTournament);
+  }
+
+  async updateOne(tournamentId: string, updateData: UpdateTournamentDTO) {
+    // Pull current data down
+    const tournament = await this.tournamentRepo.findOne(tournamentId);
+    if (tournament === undefined) {
+      return {
+        error: 'Not Found',
+        statusCode: 404,
+        message: `Cannot find resource with id ${tournamentId}`,
+      };
+    }
+
+    // Add updated fields to object
+    for (const k in updateData) {
+      if (true) {
+        tournament[k] = updateData[k];
+      }
+    }
+
+    // Save
+    const data: any = await this.tournamentRepo.save(tournament);
+    return {
+      data,
+      count: 1,
+    };
+  }
+
+  async deleteOne(tournamentId: string) {
+    return this.tournamentRepo.softDelete(tournamentId);
   }
 }

@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  DeleteDateColumn,
 } from 'typeorm';
 import { Tournament } from './tournament.entity';
 
@@ -21,6 +22,9 @@ export class Game {
 
   @Column({ type: 'varchar', length: 80 })
   fullName: string;
+
+  @DeleteDateColumn({name: 'deletedAt', type: 'timestamp'})
+  deletedAt: Date;
 
   @CreateDateColumn({ type: 'datetime' })
   createdAt: Date;

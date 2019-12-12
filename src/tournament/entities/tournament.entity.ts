@@ -8,6 +8,7 @@ import {
   JoinColumn,
   ManyToMany,
   JoinTable,
+  DeleteDateColumn,
 } from 'typeorm';
 import { Game } from './game.entity';
 import { Platform } from './platform.entity';
@@ -80,6 +81,9 @@ export class Tournament {
 
   @Column({ type: 'mediumtext' })
   rules: string;
+
+  @DeleteDateColumn({name: 'deletedAt', type: 'timestamp'})
+  deletedAt: Date;
 
   @CreateDateColumn({ type: 'datetime' })
   createdAt: Date;

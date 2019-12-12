@@ -7,6 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
   ManyToMany,
+  DeleteDateColumn,
 } from 'typeorm';
 import { Tournament } from './tournament.entity';
 
@@ -21,8 +22,8 @@ export class Platform {
   @Column({ type: 'varchar', length: 80 })
   fullName: string;
 
-  // @ManyToMany(type => Tournament, t => t.platforms)
-  // tournament: Tournament;
+  @DeleteDateColumn({name: 'deletedAt', type: 'timestamp'})
+  deletedAt: Date;
 
   @CreateDateColumn({ type: 'datetime' })
   createdAt: Date;

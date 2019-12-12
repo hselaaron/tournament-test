@@ -1,6 +1,4 @@
-import { Tournament } from '../tournament/entities/tournament.entity';
-import { Game } from '../tournament/entities/game.entity';
-import { Platform } from '../tournament/entities/platform.entity';
+import * as Tournament from '../tournament/entities';
 
 export let databaseConf: any = {
   type: 'mysql',
@@ -9,6 +7,10 @@ export let databaseConf: any = {
   username: process.env.DBUSER || 'root',
   password: process.env.DBPASSWORD || 'password',
   database: 'tournament',
-  entities: [Tournament, Platform, Game],
+  entities: [
+    Tournament.Tournament,
+    Tournament.Platform,
+    Tournament.Game,
+  ],
   synchronize: true,
 };

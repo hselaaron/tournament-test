@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Query, Body } from '@nestjs/common';
+import { Controller, Get, Post, Query, Body, Put, Param, Delete } from '@nestjs/common';
 import { TournamentService } from './tournament.service';
-import { CreateTournamentDTO } from './tournament.dto';
-import { Tournament } from './entities/tournament.entity';
+import { CreateTournamentDTO, UpdateTournamentDTO } from './dto';
+import { Tournament } from './entities';
 
 @Controller('tournament')
 export class TournamentController {
@@ -15,5 +15,15 @@ export class TournamentController {
   @Post('/')
   async addOne(@Body() tournament: CreateTournamentDTO) {
     return this.service.insertOne(tournament);
+  }
+
+  @Put(':id')
+  async update(@Param('id') tournamentId: string, @Body() tournament: UpdateTournamentDTO) {
+    return this.service.updateOne(tournamentId, tournament);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') tournamentId: string) {
+    return this.service.deleteOne(tournamentId);
   }
 }

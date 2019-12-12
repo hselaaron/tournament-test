@@ -3,11 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { TournamentController } from './tournament.controller';
 import { TournamentService } from './tournament.service';
-import { Tournament } from './entities/tournament.entity';
-import { Game } from './entities/game.entity';
+import * as Entity from './entities';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Tournament, Game])],
+  imports: [TypeOrmModule.forFeature([Entity.Tournament, Entity.Game])],
   exports: [],
   controllers: [TournamentController],
   providers: [TournamentService],

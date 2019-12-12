@@ -1,4 +1,4 @@
-import { Status } from './entities/tournament.entity';
+import { Status } from '../entities/tournament.entity';
 import {
   IsNotEmpty,
   IsBoolean,
@@ -20,6 +20,7 @@ for (const e in Status) {
   }
 }
 
+// Create Tournament DTO
 export class CreateTournamentDTO {
   @IsNotEmpty()
   @Length(3, 40)
@@ -49,7 +50,7 @@ export class CreateTournamentDTO {
 
   @IsNotEmpty()
   @IsBoolean()
-  readonly isArchived;
+  readonly isArchived: boolean;
 
   @IsNotEmpty()
   @IsDateString()
